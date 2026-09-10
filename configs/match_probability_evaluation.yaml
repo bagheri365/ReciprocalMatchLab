@@ -1,0 +1,37 @@
+version: 1
+
+name: match_probability_evaluation
+unit: unique_undirected_pair
+
+models:
+  product:
+    probability_column: score_product
+    interpretation: independence_based_product_of_calibrated_directional_probabilities
+  direct_joint:
+    probability_column: p_match_direct
+    interpretation: direct_logistic_match_probability
+
+metrics:
+  primary: [log_loss, brier]
+  calibration_bins: 10
+  calibration_bin_strategy: fixed_width
+  calibration_diagnostic: weighted_absolute_reliability_gap
+
+comparison:
+  reference: direct_joint
+  comparison: product
+  paired_unit: wave
+  positive_delta_favors_reference: true
+
+outputs:
+  per_wave_csv: reports/tables/match_probability_per_wave.csv
+  reliability_csv: reports/tables/match_probability_reliability.csv
+  paired_csv: reports/tables/match_probability_paired_differences.csv
+  summary_md: reports/match_probability_calibration.md
+
+rules:
+  - "Probability metrics are computed on unique undirected pairs, never duplicated directed rows."
+  - "The product score is interpreted only as an independence-based probability construction."
+  - "Direct-vs-product performance does not establish or refute conditional independence."
+  - "Reliability tables use held-out predictions only."
+  - "The current directional Platt calibration is fit on outer-training scores and may be optimistic; this limitation must remain visible in the report."

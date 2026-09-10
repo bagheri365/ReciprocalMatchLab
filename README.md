@@ -139,3 +139,23 @@ python scripts/run_direct_joint_match.py \
 ```
 
 The report includes paired per-wave differences and wins/ties/losses.
+
+## Milestone 7
+
+Milestone 7 closes the probabilistic part of RQ2 without adding a new model. It compares the independence-based calibrated product with the direct joint match probability on unique undirected pairs using held-out log loss, Brier score, fixed-width reliability tables, and paired wave-level differences.
+
+Run after Milestone 6 outputs exist:
+
+```bash
+python scripts/evaluate_match_probabilities.py \
+  --predictions "reports/tables/direct_joint_match_predictions.csv"
+```
+
+Outputs:
+
+```text
+reports/tables/match_probability_per_wave.csv
+reports/tables/match_probability_reliability.csv
+reports/tables/match_probability_paired_differences.csv
+reports/match_probability_calibration.md
+```
