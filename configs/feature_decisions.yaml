@@ -1,0 +1,57 @@
+version: 1
+
+scope:
+  protocol_group: primary_standard
+  decision_basis: "Pre-modeling audit of missingness and source-questionnaire availability."
+
+drop_from_primary:
+  expnum:
+    reason: "56.9% missing in primary waves; entirely absent in 7/9 primary waves. Imputation would mostly encode questionnaire availability."
+  attr4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  sinc4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  intel4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  fun4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  amb4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  shar4_1:
+    reason: "44.0% missing in primary waves; entirely absent in 4/9 primary waves."
+  attr5_1:
+    reason: "44.7% missing in primary waves; entirely absent in multiple primary waves."
+  sinc5_1:
+    reason: "44.7% missing in primary waves; entirely absent in multiple primary waves."
+  intel5_1:
+    reason: "44.7% missing in primary waves; entirely absent in multiple primary waves."
+  fun5_1:
+    reason: "44.7% missing in primary waves; entirely absent in multiple primary waves."
+  amb5_1:
+    reason: "44.7% missing in primary waves; entirely absent in multiple primary waves."
+
+keep_with_imputation:
+  int_corr:
+    strategy: "training-fold median"
+    add_missing_indicator: true
+    reason: "Pre-interaction pair feature; low pooled missingness and no entire-wave absence in the primary protocol group."
+
+default_numeric_missingness:
+  strategy: "training-fold median"
+  add_missing_indicator: true
+
+categorical_features:
+  - gender
+  - field_cd
+  - goal
+  - date
+  - go_out
+  - career_c
+
+categorical_missingness:
+  strategy: "explicit_missing_category"
+
+rules:
+  - "No imputer, encoder, scaler, or feature selector may be fit using the held-out wave."
+  - "Dropped features remain available for sensitivity analysis only."
+  - "Feature decisions are frozen before predictive results are inspected."

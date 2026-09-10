@@ -1,25 +1,53 @@
-version: 1
+version: 2
 
-# These groups are intentionally declarative.
-# Confirm them against the dataset dictionary during Phase 0 before modeling.
-preference_measurement:
-  forced_allocation_100:
-    waves: [1, 2, 3, 4, 5]
-  independent_1_to_10:
+source:
+  name: "Speed Dating Data Key.doc"
+  rule: "Protocol groups are fixed from the data dictionary, not model performance."
+
+groups:
+  primary_standard:
+    waves: [1, 2, 3, 4, 10, 11, 15, 16, 17]
+    preference_scale: "100-point allocation"
+    role: "primary"
+    note: "No variation noted in the data-key wave table."
+
+  population_variant_undergraduates:
+    waves: [5]
+    preference_scale: "100-point allocation"
+    role: "sensitivity"
+    note: "Undergraduate-only event."
+
+  alternative_preference_scale:
     waves: [6, 7, 8, 9]
+    preference_scale: "independent 1-10 ratings"
+    role: "sensitivity"
+    note: "Measurement instrument differs from the primary 100-point allocation."
 
-known_protocol_notes:
-  wave_12:
-    note: "Decision protocol included a yes-budget constraint."
-  waves_13_14:
-    note: "Questionnaire/protocol changes require audit."
-  waves_18_21:
-    note: "Additional experimental manipulations require audit."
+  constrained_decision_budget:
+    waves: [12]
+    preference_scale: "100-point allocation"
+    role: "sensitivity"
+    note: "Participants could say yes to only 50% of people met."
+
+  different_mc:
+    waves: [13, 14]
+    preference_scale: "100-point allocation"
+    role: "sensitivity"
+    note: "Data dictionary records a different M.C. condition."
+
+  distraction_manipulation:
+    waves: [18, 19, 20, 21]
+    preference_scale: "100-point allocation"
+    role: "sensitivity"
+    note: "Participants brought a book or magazine."
 
 primary_protocol_group:
-  status: "UNRESOLVED"
-  waves: []
+  name: "primary_standard"
+  waves: [1, 2, 3, 4, 10, 11, 15, 16, 17]
 
-rule:
-  - "Do not populate primary_protocol_group from model performance."
-  - "Resolve it from the data dictionary before training."
+all_expected_waves: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+
+rules:
+  - "Primary results use only primary_standard waves."
+  - "All other groups are sensitivity/OOD analyses and are never promoted based on observed model performance."
+  - "Preference-scale normalization is sensitivity analysis only; it does not establish measurement equivalence."

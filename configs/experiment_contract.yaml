@@ -1,46 +1,78 @@
-version: 1
-
+version: 2
 study:
   primary_replay_unit: directed
   marketplace_replay_unit: undirected_pair
   static_outcome_assumption: true
-
+protocol:
+  primary_protocol_group: primary_standard
+  primary_waves:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 10
+  - 11
+  - 15
+  - 16
+  - 17
+  sensitivity_groups:
+  - population_variant_undergraduates
+  - alternative_preference_scale
+  - constrained_decision_budget
+  - different_mc
+  - distraction_manipulation
 evaluation:
   outer_split: leave_one_wave_out
   primary_directional_metric: log_loss
   primary_match_ranking_metric: mutual_outcome_yield_at_k
   secondary_metrics:
-    - roc_auc
-    - pr_auc
-    - brier
-    - ndcg_match_at_k
-    - like_rate_at_k
-  k_values: [1, 3, 5]
+  - roc_auc
+  - pr_auc
+  - brier
+  - ndcg_match_at_k
+  - like_rate_at_k
+  k_values:
+  - 1
+  - 3
+  - 5
   inference_unit: wave
-
 preprocessing:
   fit_within_training_fold_only: true
   missingness_strategy: median_mode_with_missingness_audit
+  primary_max_missing_rate_review_threshold: 0.2
   preference_protocol_policy: compatible_waves_primary
   sensitivity_normalization: compositional
-
+  feature_decisions_file: configs/feature_decisions.yaml
+  numeric_imputation: training_fold_median_with_indicator
+  categorical_imputation: explicit_missing_category
+  categorical_encoding: one_hot_handle_unknown_ignore
+  scaling: standard_scaler_numeric
+features:
+  taxonomy_file: configs/feature_taxonomy.yaml
+  sensitive_policy_file: configs/sensitive_features.yaml
+  primary_feature_group: preinteraction_primary
+  pair_feature_group: derived_preinteraction_pair
+  partner_mirror_policy: reconstruct_candidate_from_iid_pid_join
 models:
   directional:
-    - logistic_regression
-    - gradient_boosted_trees
+  - logistic_regression
+  - gradient_boosted_trees
   joint:
-    - logistic_regression
-    - gradient_boosted_trees
+  - logistic_regression
+  - gradient_boosted_trees
   calibration_method: platt
-
 marketplace:
   allocation_unit: undirected_pair
   exposure_baseline: uniform_random_eligible_pair
   exposure_metrics:
-    - raw_exposure_gini
-    - relative_exposure_gini
-  lambda_grid: [0.0, 0.01, 0.05, 0.10, 0.20]
-
+  - raw_exposure_gini
+  - relative_exposure_gini
+  lambda_grid:
+  - 0.0
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.2
 research_policy:
   freeze_before_modeling: true
   post_result_changes_are_exploratory: true

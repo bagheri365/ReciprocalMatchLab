@@ -58,3 +58,41 @@ pytest
 ## Scientific rule
 
 No predictive model should be added until the Phase 0 audit passes and the choices in `configs/experiment_contract.yaml` are reviewed.
+
+
+## Milestone 2
+
+Milestone 2 freezes the protocol strata and feature-safety taxonomy before any predictive modeling.
+
+Run:
+
+```bash
+python scripts/audit_features.py --input "data/raw/Speed Dating Data.csv"
+```
+
+This writes:
+
+```text
+reports/feature_audit.md
+reports/tables/primary_feature_missingness.csv
+reports/tables/primary_feature_missingness_by_wave.csv
+```
+
+The primary protocol group is fixed from the source data dictionary, not from model performance. Waves with different preference scales or experimental variations remain sensitivity/OOD analyses.
+
+
+## Milestone 3
+
+Milestone 3 freezes missingness decisions and introduces the leakage-safe leave-one-wave-out preprocessing pipeline.
+
+Primary-model exclusions driven by the pre-modeling audit:
+
+```text
+expnum
+attr4_1, sinc4_1, intel4_1, fun4_1, amb4_1, shar4_1
+attr5_1, sinc5_1, intel5_1, fun5_1, amb5_1
+```
+
+These blocks are absent in entire primary waves and are retained for sensitivity analysis only.
+
+`int_corr` remains in the primary feature set with training-fold median imputation and a missingness indicator.

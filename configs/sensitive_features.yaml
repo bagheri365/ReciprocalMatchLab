@@ -1,19 +1,25 @@
-version: 1
+version: 2
 
-primary_model_features:
-  policy: "Prefer non-sensitive profile, preference, and compatibility features."
+primary_model_policy:
+  description: "Primary model excludes sensitive demographic variables and strong socioeconomic/location proxies."
 
 audit_only_features:
   - race
   - race_o
   - samerace
   - imprace
-  - imprace_o
+  - imprelig
   - income
-
-excluded_features:
   - zipcode
+  - undergra
+  - mn_sat
+  - tuition
+  - from
+
+excluded_free_text_or_high_cardinality:
+  - field
+  - career
 
 notes:
-  - "This is a starting policy, not a complete ethical assessment."
-  - "Sensitive/proxy variables may be retained for auditing without being used by the primary ranker."
+  - "Audit-only does not mean these variables are harmless; it means they are retained only for diagnostics/sensitivity work."
+  - "Do not make subgroup fairness claims unless sample sizes and estimands are explicitly justified."
