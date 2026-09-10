@@ -1,0 +1,42 @@
+version: 1
+
+name: pair_level_marketplace_allocation
+
+allocation:
+  unit: undirected_pair
+  value_column: p_direct_joint
+  per_user_capacity: 3
+  target_capacity_fraction: 0.60
+  solver: scipy_milp
+  exposure_penalty: squared_relative_exposure
+  lambda_grid: [0.0, 0.01, 0.05, 0.10, 0.20, 0.50]
+
+random_baseline:
+  repeats: 50
+  seed: 365
+
+exposure:
+  opportunity_baseline: uniform_random_eligible_edge
+  relative_exposure_definition: realized_exposure_divided_by_expected_random_exposure
+
+metrics:
+  - pair_match_rate
+  - successful_user_rate
+  - pair_coverage
+  - raw_exposure_gini
+  - relative_exposure_gini
+  - mean_selected_score
+
+outputs:
+  per_wave_csv: reports/tables/marketplace_allocation_per_wave.csv
+  tradeoff_csv: reports/tables/marketplace_allocation_tradeoff.csv
+  paired_csv: reports/tables/marketplace_allocation_paired_differences.csv
+  exposure_csv: reports/tables/marketplace_user_exposure.csv
+  summary_md: reports/marketplace_allocation.md
+
+rules:
+  - "Each selected undirected edge represents one mutual interaction opportunity for both users."
+  - "The target number of selected pairs is fixed within a wave across optimized policies."
+  - "Relative exposure uses the analytic uniform-random eligible-edge expectation Q_u = M * degree(u) / |E|."
+  - "Exposure concentration is not labeled fairness."
+  - "Historical pair outcomes are reused under a static replay assumption; results are not causal policy effects."

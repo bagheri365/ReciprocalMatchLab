@@ -159,3 +159,15 @@ reports/tables/match_probability_reliability.csv
 reports/tables/match_probability_paired_differences.csv
 reports/match_probability_calibration.md
 ```
+
+
+## Milestone 8
+
+Milestone 8 adds pair-level marketplace allocation with batch MILP optimization and an exposure-concentration penalty.
+
+```bash
+python scripts/run_marketplace_allocation.py \
+  --predictions "reports/tables/direct_joint_match_predictions.csv"
+```
+
+The experiment reports PairMatchRate, SuccessfulUserRate, coverage, raw exposure Gini, relative-exposure Gini, and paired trade-offs versus the unpenalized allocator. Relative exposure is normalized to the analytic uniform-random eligible-edge expectation and is not labeled a fairness metric.
