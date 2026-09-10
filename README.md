@@ -1,5 +1,7 @@
 # ReciprocalMatchLab
 
+[![CI](https://github.com/bagheri365/ReciprocalMatchLab/actions/workflows/ci.yml/badge.svg)](https://github.com/bagheri365/ReciprocalMatchLab/actions/workflows/ci.yml)
+
 **Reciprocal recommendation and marketplace allocation for two-sided matching systems.**
 
 ReciprocalMatchLab asks a question that ordinary recommenders do not: **what should we rank when success requires both sides to say yes?**
@@ -104,6 +106,10 @@ The allocator optimizes over **undirected pairs** with per-user opportunity limi
 At λ=0.20, relative exposure concentration falls about **46%** while historical pair-match yield falls about **5% relative**. Concentration improves in all 9 primary waves.
 
 This is an **exposure-concentration** result, not a fairness claim.
+
+![Exposure–yield frontier](docs/figures/exposure_yield_frontier.svg)
+
+*Lower relative-exposure Gini means less concentrated opportunity; the frontier shows the historical static-replay yield trade-off as the exposure penalty increases.*
 
 ## Production system view
 
