@@ -1,0 +1,30 @@
+version: 1
+name: direct_symmetric_match
+
+target: match
+
+model:
+  class: sklearn.linear_model.LogisticRegression
+  params:
+    C: 1.0
+    solver: lbfgs
+    max_iter: 2000
+    random_state: 365
+
+evaluation:
+  split: leave_one_wave_out
+  comparison_policies: [requester, candidate, product, minimum, direct_joint]
+  k_values: [1, 3, 5]
+  primary_metric: mutual_outcome_yield_at_k
+
+outputs:
+  predictions_csv: reports/tables/direct_joint_match_predictions.csv
+  per_wave_csv: reports/tables/direct_joint_match_per_wave.csv
+  paired_differences_csv: reports/tables/direct_joint_paired_differences.csv
+  summary_md: reports/direct_joint_match.md
+
+rules:
+  - "Direct match training uses one canonical undirected row per pair."
+  - "Pair features are symmetric by construction."
+  - "The outer held-out wave is never used for preprocessing or model fitting."
+  - "Comparisons are paired at the wave level."

@@ -117,3 +117,25 @@ reports/directional_logistic_baseline.md
 ```
 
 The held-out `p_like` predictions are intentionally preserved for later calibration and reciprocal-scoring milestones.
+
+## Milestone 5
+
+Milestone 5 adds training-only Platt calibration plus requester-only, candidate-only, product, and minimum reciprocal scores. Calibration never uses the outer held-out wave; because it is fit on the base model's training scores, it is used for score construction rather than definitive probability-calibration claims.
+
+```bash
+python scripts/run_reciprocal_scoring.py --input "data/raw/Speed Dating Data.csv"
+```
+
+## Milestone 6
+
+Milestone 6 adds a direct symmetric joint-match model trained on unique undirected pairs and compares it against requester-only, candidate-only, product, and minimum reciprocal scoring.
+
+Run after Milestone 5 outputs exist:
+
+```bash
+python scripts/run_direct_joint_match.py \
+  --input "data/raw/Speed Dating Data.csv" \
+  --reciprocal-predictions "reports/tables/reciprocal_scores_predictions.csv"
+```
+
+The report includes paired per-wave differences and wins/ties/losses.

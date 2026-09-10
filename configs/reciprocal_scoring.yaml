@@ -1,0 +1,25 @@
+version: 1
+name: calibrated_reciprocal_scoring
+
+calibration:
+  method: platt
+  scheme: outer_training_scores_only
+  input: logit_raw_probability
+  clip_epsilon: 1.0e-6
+  random_state: 365
+
+ranking:
+  k_values: [1, 3, 5]
+  scores: [requester, candidate, product, minimum]
+
+outputs:
+  predictions_csv: reports/tables/reciprocal_scores_predictions.csv
+  per_wave_csv: reports/tables/reciprocal_scores_per_wave.csv
+  summary_md: reports/reciprocal_scoring.md
+
+rules:
+  - "The calibrator is fit only on scores and labels from the outer training set."
+  - "The outer held-out wave is never used for model fitting or calibration."
+  - "Training-score calibration may be optimistic; it is used here for score construction, not definitive probability claims."
+  - "p_ba comes only from the reverse row in the same held-out wave."
+  - "MutualOutcomeYield@K is a directed replay metric, not a realized match count."
