@@ -1,0 +1,30 @@
+version: 1
+
+labels:
+  - dec
+  - dec_o
+  - match
+
+identifiers:
+  - iid
+  - pid
+  - wave
+
+policy_dependent_context:
+  - order
+  - position
+  - positin1
+
+forbidden_post_interaction:
+  - attr_o
+  - sinc_o
+  - intel_o
+  - fun_o
+  - amb_o
+  - shar_o
+  - like_o
+  - prob_o
+
+notes:
+  - "The deny-list is intentionally conservative and must be expanded after the full data-dictionary audit."
+  - "A feature being absent from forbidden_post_interaction does not automatically make it safe."

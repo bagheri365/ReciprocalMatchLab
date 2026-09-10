@@ -1,0 +1,19 @@
+version: 1
+
+primary_model_features:
+  policy: "Prefer non-sensitive profile, preference, and compatibility features."
+
+audit_only_features:
+  - race
+  - race_o
+  - samerace
+  - imprace
+  - imprace_o
+  - income
+
+excluded_features:
+  - zipcode
+
+notes:
+  - "This is a starting policy, not a complete ethical assessment."
+  - "Sensitive/proxy variables may be retained for auditing without being used by the primary ranker."

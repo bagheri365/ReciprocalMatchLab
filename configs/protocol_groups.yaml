@@ -1,0 +1,25 @@
+version: 1
+
+# These groups are intentionally declarative.
+# Confirm them against the dataset dictionary during Phase 0 before modeling.
+preference_measurement:
+  forced_allocation_100:
+    waves: [1, 2, 3, 4, 5]
+  independent_1_to_10:
+    waves: [6, 7, 8, 9]
+
+known_protocol_notes:
+  wave_12:
+    note: "Decision protocol included a yes-budget constraint."
+  waves_13_14:
+    note: "Questionnaire/protocol changes require audit."
+  waves_18_21:
+    note: "Additional experimental manipulations require audit."
+
+primary_protocol_group:
+  status: "UNRESOLVED"
+  waves: []
+
+rule:
+  - "Do not populate primary_protocol_group from model performance."
+  - "Resolve it from the data dictionary before training."
