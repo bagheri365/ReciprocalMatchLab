@@ -1,0 +1,21 @@
+version: 1
+name: directional_logistic_regression
+target: dec
+model:
+  class: sklearn.linear_model.LogisticRegression
+  params:
+    C: 1.0
+    solver: lbfgs
+    max_iter: 2000
+    random_state: 365
+evaluation:
+  split: leave_one_wave_out
+  probability_clip_epsilon: 1.0e-15
+outputs:
+  metrics_csv: reports/tables/directional_logistic_per_wave.csv
+  predictions_csv: reports/tables/directional_logistic_predictions.csv
+  summary_md: reports/directional_logistic_baseline.md
+rules:
+- No hyperparameter tuning in Milestone 4.
+- All preprocessing is fit within each training fold.
+- Held-out wave probabilities are preserved for later calibration analysis.

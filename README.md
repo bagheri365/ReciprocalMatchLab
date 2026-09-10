@@ -96,3 +96,24 @@ attr5_1, sinc5_1, intel5_1, fun5_1, amb5_1
 These blocks are absent in entire primary waves and are retained for sensitivity analysis only.
 
 `int_corr` remains in the primary feature set with training-fold median imputation and a missingness indicator.
+
+
+## Milestone 4
+
+Milestone 4 adds the first empirical model: a fixed-hyperparameter directional logistic-regression baseline evaluated with leave-one-wave-out folds.
+
+Run:
+
+```bash
+python scripts/run_directional_baseline.py --input "data/raw/Speed Dating Data.csv"
+```
+
+Outputs:
+
+```text
+reports/tables/directional_logistic_per_wave.csv
+reports/tables/directional_logistic_predictions.csv
+reports/directional_logistic_baseline.md
+```
+
+The held-out `p_like` predictions are intentionally preserved for later calibration and reciprocal-scoring milestones.
